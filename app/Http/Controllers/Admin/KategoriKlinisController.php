@@ -10,7 +10,7 @@ class KategoriKlinisController extends Controller
 {
     public function index()
     {
-        $pemilik = KategoriKlinis::all();
-        return view('admin.kategoriKlinis.index', compact('kategoriKlinis'));
+        $kategoriKlinis = KategoriKlinis::all();
+        return view('admin.kategori-klinis.index', compact('kategoriKlinis'));
     }
 }

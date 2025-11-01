@@ -10,7 +10,7 @@ class KodeTindakanTerapiController extends Controller
 {
     public function index()
     {
-        $pemilik = KodeTindakanTerapi::all();
-        return view('admin.kodeTindakanTerapi.index', compact('kodeTindakanTerapi'));
+        $kodeTindakanTerapi = KodeTindakanTerapi::all();
+        return view('admin.kode-tindakan-terapi.index', compact('kodeTindakanTerapi'));
     }
 }

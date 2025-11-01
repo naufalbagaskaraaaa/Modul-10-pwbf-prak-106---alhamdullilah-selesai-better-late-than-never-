@@ -19,7 +19,7 @@
             <li><a href="{{ route('site.layanan') }}">Layanan</a></li>
             <li><a href="{{ route('site.kontak') }}">Kontak</a></li>
             <li><a href="{{ route('site.strukturOrganisasi') }}">Struktur Organisasi</a></li>
-            <li><a href="{{ route('site.login') }}">Login</a></li>
+            <li><a href="{{ route('login') }}">Login</a></li>
         </ul>
         </nav>
 

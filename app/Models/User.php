@@ -19,8 +19,9 @@ class User extends Authenticatable
      */
     protected $table = 'user';
     protected $primaryKey = 'iduser';
+    public $timestamps = false;
     protected $fillable = [
-        'name',
+        'nama',
         'email',
         'password',
     ];
@@ -52,4 +53,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Pemilik::class, 'iduser', 'iduser');
     }
+
+    public function roleUser()
+    {
+        return $this->hasMany(UserRole::class, 'iduser', 'iduser');
+    }
 }
+

@@ -6,5 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class KodeTindakanTerapi extends Model
 {
-    //
+    protected $table = 'kode_tindakan_terapi';
+    protected $primaryKey ='idkode_tindakan_terapi';
+    protected $fillable = ['kode', 'deskripsi_tindakan_terapi', 'idkategori', 'idkategori_klinis'];
+
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'idkategori', 'idkategori');
+    }
+
+    public function kategori_klinis()
+    {
+        return $this->belongsTo(KategoriKlinis::class, 'idkategori_klinis', 'idkategori_klinis');
+    }
+
 }

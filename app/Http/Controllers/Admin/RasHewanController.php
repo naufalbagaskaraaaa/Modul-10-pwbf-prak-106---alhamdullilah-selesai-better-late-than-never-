@@ -10,7 +10,7 @@ class RasHewanController extends Controller
 {
     public function index()
     {
-        $pemilik = RasHewan::all();
-        return view('admin.rasHewan.index', compact('rasHewan'));
+        $rasHewan = RasHewan::all();
+        return view('admin.ras-hewan.index', compact('rasHewan'));
     }
 }

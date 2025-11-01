@@ -10,7 +10,7 @@ class PetController extends Controller
 {
     public function index()
     {
-        $pemilik = Pet::all();
+        $pet = Pet::all();
         return view('admin.pet.index', compact('pet'));
     }
 }
