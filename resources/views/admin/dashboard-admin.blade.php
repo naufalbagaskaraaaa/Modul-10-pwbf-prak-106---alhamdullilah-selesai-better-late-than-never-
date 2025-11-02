@@ -62,13 +62,13 @@
 
                         <div class="col-md-12 mb-2">
                             <a href="{{route('admin.user.index')}}" class="btn btn-dark btn-block">
-                                <i class="fas fa-user-cog"></i> User Management
+                                <i class="fas fa-user-cog"></i> User
                             </a>
                         </div>
                         
                         <div class="col-md-12 mb-2">
                             <a href="{{route('admin.role.index')}}" class="btn btn-info btn-block">
-                                <i class="fas fa-user-tag"></i> Role Management
+                                <i class="fas fa-user-tag"></i> Role
                             </a>
                         </div>
 
@@ -77,11 +77,7 @@
                                 <i class="fas fa-users-cog"></i> User Role
                             </a>
                         </div>
-                        <div class="col-md-12 mb-2">
-                            <a href="{{route('admin.dashboard-admin')}}" class="btn btn-warning btn-block">
-                                <i class="fas fa-users-cog"></i> Dashboard Administrator
-                            </a>
-                        </div>
+                
                         </div>
                     </div>
 

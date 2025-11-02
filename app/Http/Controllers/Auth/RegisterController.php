@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use App\Models\Role;
 
 class RegisterController extends Controller
 {
@@ -28,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/pemilik/dashboard';
 
     /**
      * Create a new controller instance.
@@ -67,6 +69,20 @@ class RegisterController extends Controller
             'nama' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+        ]);
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        $namaRole = Role::where('idrole', $user->roleUser[0]->idrole ?? null)->first();
+
+        $request->session()->put([
+            'user_id' => $user->iduser,
+            'user_name' => $user->nama,
+            'user_email' => $user->email,
+            'user_role' => $user->roleUser[0]->idrole ?? 'user',
+            'user_role_name' => $namaRole->nama_role ?? 'User',
+            'user_status' => $user->roleUser[0]->status ?? 'active'
         ]);
     }
 }
