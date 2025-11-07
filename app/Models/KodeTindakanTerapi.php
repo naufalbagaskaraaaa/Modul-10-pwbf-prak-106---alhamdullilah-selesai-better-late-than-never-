@@ -20,4 +20,6 @@ class KodeTindakanTerapi extends Model
         return $this->belongsTo(KategoriKlinis::class, 'idkategori_klinis', 'idkategori_klinis');
     }
 
+    public $timestamps=false;
+
 }

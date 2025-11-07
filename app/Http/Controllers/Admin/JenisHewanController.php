@@ -60,10 +60,10 @@ class JenisHewanController extends Controller
     {
         try {
             return JenisHewan::create([
-                'nama_jenis_hewan'=>trim(ucwords(strtolower($data['nama_jenis_hewan']))),
+                'nama_jenis_hewan'=>$this->formatNamaJenisHewan($data['nama_jenis_hewan']),
             ]);
         } catch (\Exception $e) {
-            throw new \Exception('gagal simpan data sayang: ' . $e->getMessage());
+            throw new \Exception('gagal simpan data jenis hewan: ' . $e->getMessage());
         }
     }
 

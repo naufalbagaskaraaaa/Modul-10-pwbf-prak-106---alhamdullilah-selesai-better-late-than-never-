@@ -37,6 +37,10 @@ Route::middleware('isAdministrator')->group(function() {
     Route::post('/admin/jenis-hewan/store', [App\Http\Controllers\Admin\JenisHewanController::class, 'store'])->name('admin.jenis-hewan.store');
     Route::get('/admin/kategori/create', [App\Http\Controllers\Admin\KategoriController::class, 'create'])->name('admin.kategori.create');
     Route::post('/admin/kategori/store', [App\Http\Controllers\Admin\KategoriController::class, 'store'])->name('admin.kategori.store');
+    Route::get('/admin/kategori-klinis/create', [App\Http\Controllers\Admin\KategoriKlinisController::class, 'create'])->name('admin.kategori-klinis.create');
+    Route::post('/admin/kategori-klinis/store', [App\Http\Controllers\Admin\KategoriKlinisController::class, 'store'])->name('admin.kategori-klinis.store');
+    Route::get('/admin/kode-tindakan-terapi/create', [App\Http\Controllers\Admin\KodeTindakanTerapiController::class, 'create'])->name('admin.kode-tindakan-terapi.create');
+    Route::post('/admin/kode-tindakan-terapi/store', [App\Http\Controllers\Admin\KodeTindakanTerapiController::class, 'store'])->name('admin.kode-tindakan-terapi.store');
 });
 
 Route::middleware('isResepsionis')->group(function(){

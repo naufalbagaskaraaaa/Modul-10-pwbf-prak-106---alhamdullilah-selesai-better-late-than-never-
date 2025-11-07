@@ -56,7 +56,7 @@ class KategoriController extends Controller
     {
         try {
             return Kategori::create([
-                'nama_kategori'=>trim(ucwords(strtolower($data['nama_kategori']))),
+                'nama_kategori'=>$this->formatNamaKategori($data['nama_kategori']),
             ]);
         } catch (\Exception $e) {
             throw new \Exception('gagal menyimpan nama kategori: ' . $e->getMessage());
