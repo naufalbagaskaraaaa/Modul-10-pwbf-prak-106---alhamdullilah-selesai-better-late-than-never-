@@ -19,4 +19,6 @@ class Pemilik extends Model
     {
         return $this->hasMany(Pet::class, 'idpemilik', 'idpemilik');
     }
+
+    public $timestamps=false;
 }

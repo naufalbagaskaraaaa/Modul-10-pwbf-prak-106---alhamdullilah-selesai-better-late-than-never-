@@ -13,4 +13,9 @@ class PetController extends Controller
         $pet = Pet::all();
         return view('admin.pet.index', compact('pet'));
     }
+
+    public function create()
+    {
+        return view('admin.pet.create');
+    }
 }
