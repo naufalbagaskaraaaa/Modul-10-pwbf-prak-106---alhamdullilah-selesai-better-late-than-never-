@@ -8,7 +8,8 @@ class Pet extends Model
 {
     protected $table = 'pet';
     protected $primaryKey ='idpet';
-    protected $fillable = ['idpet', 'nama', 'tanggal_lahir', 'warna_tanda', 'jenis_kelamin'];
+    protected $fillable = ['idpet', 'nama', 'tanggal_lahir', 'warna_tanda', 'jenis_kelamin',
+        'idpemilik', 'idras_hewan'];
 
     public function pemilik()
     {
@@ -19,4 +20,6 @@ class Pet extends Model
     {
         return $this->belongsTo(RasHewan::class, 'idras_hewan', 'idras_hewan');
     }
+
+    public $timestamps = false;
 }

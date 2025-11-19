@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dokter\DashboardDokterController;
 use App\Http\Controllers\Pemilik\DashboardPemilikController;
 use App\Http\Controllers\Perawat\DashboardPerawatController;
+use App\Http\Controllers\Perawat\DashboardResepsionisController;
 use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -43,6 +44,8 @@ Route::middleware('isAdministrator')->group(function() {
     Route::post('/admin/kode-tindakan-terapi/store', [App\Http\Controllers\Admin\KodeTindakanTerapiController::class, 'store'])->name('admin.kode-tindakan-terapi.store');
     Route::get('/admin/pemilik/create', [App\Http\Controllers\Admin\PemilikController::class, 'create'])->name('admin.pemilik.create');
     Route::post('/admin/pemilik/store', [App\Http\Controllers\Admin\PemilikController::class, 'store'])->name('admin.pemilik.store');
+    Route::get('/admin/pet/create', [App\Http\Controllers\Admin\PetController::class, 'create'])->name('admin.pet.create');
+    Route::post('/admin/pet/store', [App\Http\Controllers\Admin\PetController::class, 'store'])->name('admin.pet.store');
 });
 
 Route::middleware('isResepsionis')->group(function(){

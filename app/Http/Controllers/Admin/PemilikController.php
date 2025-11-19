@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Pemilik;
 use Illuminate\Http\Request;
+use app\Models\User;
 
 class PemilikController extends Controller
 {
@@ -16,7 +17,8 @@ class PemilikController extends Controller
 
     public function create()
     {
-        return view('admin.pemilik.create');
+        $user=User::all();
+        return view('admin.pemilik.create', compact('user'));
     }
 
     public function store(Request $request)
@@ -50,7 +52,7 @@ class PemilikController extends Controller
             ],
             'iduser'=>[
                 'required',
-                'biginteger',
+                'integer',
                 'exists:user,iduser'
             ],
         ], [
@@ -68,5 +70,23 @@ class PemilikController extends Controller
             'iduser.string'=>'error, iduser tidak sesuai format',
             'iduser.exists'=>'error, iduser tidak ditemukan',
         ]);
+    }
+
+    protected function createPemilik(array $data)
+    {
+        try {
+            return Pemilik::create([
+                'no_wa'=>$this->formatPemilik($data['no_wa']),
+                'alamat'=>$this->formatPemilik($data['alamat']),
+                'iduser'=>($data['iduser']),
+            ]);
+        } catch (\Exception $e) {
+            throw new \Exception('gagal menyimpan data pemilik: ' . $e->getMessage());
+        }
+    }
+
+    protected function formatPemilik($nama)
+    {
+        return trim(ucwords(strtolower($nama)));
     }
 }

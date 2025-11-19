@@ -21,9 +21,31 @@
                     <form action="{{route('admin.pemilik.store')}}" method="POST">
                         @csrf
 
+                        <label for="iduser" class="form-label">
+                                Nama User <span class="text-danger">*</span>
+                            </label>
+                            <select type="text"
+                            class="form-control @error('iduser') is-invalid @enderror"
+                            id="iduser"
+                            name="iduser"
+                            required>
+                            <option value="">Pilih User</option>
+                            @foreach($user as $index => $item)
+                                <option value="{{$item->iduser}}" {{ old('iduser') == $item->iduser?
+                                    'selected' : ''}}>
+                                    {{$item->nama}}
+                                </option>
+                            @endforeach
+                            </select>    
+                            @error('iduser')
+                            <div class="invalid-feedback">
+                                {{$message}}
+                            </div>
+                            @enderror
+
                         <div class="mb-3">
                             <label for="no_wa" class="form-label">
-                                Pemilik <span class="text-danger">*</span>
+                                Nomer Whatsapp <span class="text-danger">*</span>
                             </label>
                             <input type="text"
                             class="form-control @error('no_wa') is-invalid @enderror"
@@ -32,7 +54,25 @@
                             value="{{old('no_wa')}}"
                             placeholder="masukan nomer whatsapp anda"
                             required>
-                            @error('kode')
+                            @error('no_wa')
+                            <div class="invalid-feedback">
+                                {{$message}}
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="alamat" class="form-label">
+                                Alamat <span class="text-danger">*</span>
+                            </label>
+                            <input type="text"
+                            class="form-control @error('alamat') is-invalid @enderror"
+                            id="alamat"
+                            name="alamat"
+                            value="{{old('alamat')}}"
+                            placeholder="masukan alamat anda"
+                            required>
+                            @error('alamat')
                             <div class="invalid-feedback">
                                 {{$message}}
                             </div>

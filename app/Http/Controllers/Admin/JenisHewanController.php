@@ -5,12 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\JenisHewan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class JenisHewanController extends Controller
 {
     public function index()
     {
-        $jenisHewan = JenisHewan::all();
+        //$jenisHewan = JenisHewan::all();
+
+        $jenisHewan=DB::table('jenis_hewan')
+        ->select('idjenis_hewan', 'nama_jenis_hewan')
+        ->get();
+
         return view('admin.jenis-hewan.index', compact('jenisHewan'));
     }
 
@@ -59,9 +65,15 @@ class JenisHewanController extends Controller
     protected function createJenisHewan(array $data)
     {
         try {
-            return JenisHewan::create([
+            //return JenisHewan::create([
+              //  'nama_jenis_hewan'=>$this->formatNamaJenisHewan($data['nama_jenis_hewan']),
+            //]);
+
+            $jenisHewan=DB::table('jenis_hewan')->insert([
                 'nama_jenis_hewan'=>$this->formatNamaJenisHewan($data['nama_jenis_hewan']),
-            ]);
+        ]);
+
+        return $jenisHewan;
         } catch (\Exception $e) {
             throw new \Exception('gagal simpan data jenis hewan: ' . $e->getMessage());
         }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\KodeTindakanTerapi;
 use Illuminate\Http\Request;
+use App\Models\Kategori;
+use App\Models\KategoriKlinis;
 
 class KodeTindakanTerapiController extends Controller
 {
@@ -16,7 +18,9 @@ class KodeTindakanTerapiController extends Controller
 
     public function create()
     {
-        return view('admin.kode-tindakan-terapi.create');
+        $kategori=Kategori::all();
+        $kategoriKlinis=KategoriKlinis::all();
+        return view('admin.kode-tindakan-terapi.create', compact('kategori', 'kategoriKlinis'));
     }
 
     public function store(Request $request)
