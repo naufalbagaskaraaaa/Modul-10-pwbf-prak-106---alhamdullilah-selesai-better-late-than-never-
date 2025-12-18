@@ -6,12 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Pemilik;
 use Illuminate\Http\Request;
 use app\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class PemilikController extends Controller
 {
     public function index()
     {
-        $pemilik = Pemilik::all();
+        //$pemilik = Pemilik::all();
+
+        $pemilik = DB::table('pemilik')
+            ->join('user', 'pemilik.iduser', '=', 'user.iduser')
+            ->select('pemilik.*', 'user.nama', 'user.email')
+            ->get();
+
         return view('admin.pemilik.index', compact('pemilik'));
     }
 
@@ -28,6 +35,41 @@ class PemilikController extends Controller
         $pemilik=$this->createPemilik($validatedData);
 
         return redirect()->route('admin.pemilik.index')->with('selamat data pemilik sudah berhasil ditambakan');
+    }
+
+    public function edit($id)
+    {
+        $pemilik = DB::table('pemilik')->where('idpemilik', $id)->first();
+        
+        if(!$pemilik) return back()->with('error', 'Data tidak ditemukan');
+
+        $users = DB::table('user')->orderBy('nama', 'asc')->get();
+
+        return view('admin.pemilik.edit', compact('pemilik', 'users'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validatedData = $this->validatePemilik($request, $id);
+
+        DB::table('pemilik')->where('idpemilik', $id)->update([
+            'no_wa'  => $validatedData['no_wa'],
+            'alamat' => $this->formatAlamat($validatedData['alamat']),
+            'iduser' => $validatedData['iduser'],
+        ]);
+
+        return redirect()->route('admin.pemilik.index')
+            ->with('success', 'Data pemilik berhasil diupdate!');
+    }
+
+    public function destroy($id)
+    {
+        try {
+            DB::table('pemilik')->where('idpemilik', $id)->delete();
+            return redirect()->route('admin.pemilik.index')->with('success', 'Data pemilik dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.pemilik.index')->with('error', 'Gagal hapus. Pemilik ini masih punya hewan peliharaan (Pet).');
+        }
     }
 
     protected function validatePemilik(Request $request, $id=null)

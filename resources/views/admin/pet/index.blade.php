@@ -1,3 +1,4 @@
+@extends('layouts.app')
 <div class="mb-3">
     <form action="{{route('admin.pet.create')}}" method="GET" style="display: inline;">
         <button type="submit" class="btn btn-primary">
@@ -18,14 +19,14 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($pet as $index => $item)
+        @foreach ($data as $index => $item)
         <tr>
             <td>{{$index+1}}</td>
             <td>{{$item->nama}}</td>
             <td>{{$item->tanggal_lahir}}</td>
             <td>{{$item->warna_tanda}}</td>
-            <td>{{$item->pemilik->user->nama}}</td>
-            <td>{{$item->ras_hewan->nama_ras}}</td>
+            <td>{{ $item->nama_pemilik }}</td>
+            <td>{{$item->nama_ras}}</td>
             <td>
                 <button type="button" class="btn btn-sm btn-warning" onclick="window.location='#'">
                     <i class="fas fa-trash"></i> edit

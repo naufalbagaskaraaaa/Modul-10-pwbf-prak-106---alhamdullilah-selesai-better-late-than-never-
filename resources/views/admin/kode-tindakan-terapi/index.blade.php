@@ -1,3 +1,4 @@
+@extends('layouts.app')
 <div class="mb-3">
     <form action="{{route('admin.kode-tindakan-terapi.create')}}" method="GET" style="display: inline;">
         <button type="submit" class="btn btn-primary">

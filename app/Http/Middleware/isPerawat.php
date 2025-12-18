@@ -16,16 +16,17 @@ class isPerawat
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()){
-            return redirect()->route('login');
-        }
+        
+    if (!Auth::check()){
+        return redirect()->route('login');
+    }
 
-        $userRole=session('user_role');
+    // Gunakan loose comparison (==) jangan (===) agar tipe data string/int tidak masalah
+    if (session('user_role') == 3){ 
+        return $next($request);
+    }
 
-        if ($userRole===3){
-            return $next($request);
-        } else {
-            return back()->with('error', 'akses ditolak mas');
-        }
+    return redirect('/')
+    ->with('error', 'Akses Perawat Ditolak. Role Anda: ' . session('user_role'));
     }
 }

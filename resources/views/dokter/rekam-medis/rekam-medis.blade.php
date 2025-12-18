@@ -27,7 +27,7 @@
                             @forelse ($daftar_rekam_medis as $rekamMedis)
                             <tr>
                                 <td>{{ $rekamMedis->idrekam_medis }}</td>
-                                <td>{{ $rekamMedis->pet->nama }}</td>
+                                <td>{{ $rekamMedis->nama_hewan_peliharaan->nama }}</td>
                                 <td>{{ $rekamMedis->created_at->format('d-m-Y H:i') }}</td>
                                 <td>{{ $rekamMedis->anamnesa }}</td>
                                 <td>{{ $rekamMedis->diagnosa }}</td>

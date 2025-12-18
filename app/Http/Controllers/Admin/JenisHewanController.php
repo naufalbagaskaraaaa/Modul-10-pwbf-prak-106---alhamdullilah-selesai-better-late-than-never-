@@ -27,19 +27,43 @@ class JenisHewanController extends Controller
 
     public function store(Request $request)
     {
-        // validasi input
         $validatedData=$this->validateJenisHewan($request);
 
-        // helper untuk menyimpan data
         $jenisHewan=$this->createJenisHewan($validatedData);
 
         return redirect()->route('admin.jenis-hewan.index')
-                        ->with('succes, keren mas sampean');
+                        ->with('succes', 'keren mas sampean');
+    }
+
+    public function edit($id)
+    {
+        $jenisHewan = DB::table('jenis_hewan')->where('idjenis_hewan', $id)->first();
+        
+        return view('admin.jenis-hewan.edit', compact('jenisHewan'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validatedData = $this->validateJenisHewan($request, $id);
+
+        DB::table('jenis_hewan')->where('idjenis_hewan', $id)->update([
+            'nama_jenis_hewan' => $this->formatNamaJenisHewan($validatedData['nama_jenis_hewan'])
+        ]);
+
+        return redirect()->route('admin.jenis-hewan.index')
+            ->with('success', 'Data berhasil diupdate!');
+    }
+
+    public function destroy($id)
+    {
+        DB::table('jenis_hewan')->where('idjenis_hewan', $id)->delete();
+
+        return redirect()->route('admin.jenis-hewan.index')
+            ->with('success', 'Data berhasil dihapus.');
     }
 
     protected function validateJenisHewan(Request $request, $id=null)
     {
-        // data yang bersifat unique (jujur aku kurang ngerti ini)
         $uniqueRule=$id?
             'unique:jenis_hewan,nama_jenis_hewan,' . $id . ',idjenis_hewan' :
             'unique:jenis_hewan,nama_jenis_hewan';
@@ -61,7 +85,6 @@ class JenisHewanController extends Controller
         ]);
     }
 
-    // ini helper untuk create data baru
     protected function createJenisHewan(array $data)
     {
         try {
@@ -79,7 +102,6 @@ class JenisHewanController extends Controller
         }
     }
 
-    // ini helper untuk format nama menjadi title case
     protected function formatNamaJenisHewan($nama)
     {
         return trim(ucwords(strtolower($nama)));

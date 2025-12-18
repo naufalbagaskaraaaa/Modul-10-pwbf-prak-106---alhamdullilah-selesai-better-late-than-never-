@@ -7,12 +7,25 @@ use App\Models\KodeTindakanTerapi;
 use Illuminate\Http\Request;
 use App\Models\Kategori;
 use App\Models\KategoriKlinis;
+use Illuminate\Support\Facades\DB;
 
 class KodeTindakanTerapiController extends Controller
 {
     public function index()
     {
-        $kodeTindakanTerapi = KodeTindakanTerapi::all();
+        //$kodeTindakanTerapi = KodeTindakanTerapi::all();
+
+        $kodeTindakanTerapi = DB::table('kode_tindakan_terapi')
+            ->join('kategori', 'kode_tindakan_terapi.idkategori', '=', 'kategori.idkategori')
+            ->join('kategori_klinis', 'kode_tindakan_terapi.idkategori_klinis', '=', 'kategori_klinis.idkategori_klinis')
+            ->select(
+                'kode_tindakan_terapi.*', 
+                'kategori.nama_kategori', 
+                'kategori_klinis.nama_kategori_klinis'
+            )
+            ->orderBy('kode_tindakan_terapi.idkode_tindakan_terapi', 'desc')
+            ->get();
+
         return view('admin.kode-tindakan-terapi.index', compact('kodeTindakanTerapi'));
     }
 
@@ -33,6 +46,39 @@ class KodeTindakanTerapiController extends Controller
             ->with('sukses menambahkan data');
     }
 
+    public function edit($id)
+    {
+        $kodeTindakan = DB::table('kode_tindakan_terapi')->where('idkode_tindakan_terapi', $id)->first();
+        
+        if(!$kodeTindakan) return back()->with('error', 'Data tidak ditemukan');
+
+        $kategori = DB::table('kategori')->orderBy('nama_kategori')->get();
+        $kategoriKlinis = DB::table('kategori_klinis')->orderBy('nama_kategori_klinis')->get();
+
+        return view('admin.kode-tindakan-terapi.edit', compact('kodeTindakan', 'kategori', 'kategoriKlinis'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->validateKode($request, $id);
+
+        DB::table('kode_tindakan_terapi')->where('idkode_tindakan_terapi', $id)->update([
+            'kode' => strtoupper($request->kode),
+            'deskripsi_tindakan_terapi' => $request->deskripsi_tindakan_terapi,
+            'idkategori' => $request->idkategori,
+            'idkategori_klinis' => $request->idkategori_klinis,
+        ]);
+
+        return redirect()->route('admin.kode-tindakan-terapi.index')
+            ->with('success', 'Data tindakan berhasil diperbarui!');
+    }
+
+    public function destroy($id)
+    {
+        DB::table('kode_tindakan_terapi')->where('idkode_tindakan_terapi', $id)->delete();
+        return redirect()->route('admin.kode-tindakan-terapi.index')->with('success', 'Data dihapus.');
+    }
+
     protected function validateKodeTindakanTerapi(Request $request, $id=null)
     {
         $uniqueRule=$id?
@@ -44,8 +90,7 @@ class KodeTindakanTerapiController extends Controller
                 'required',
                 'string', 
                 // ini saya agak bingung harus diisi apa validasinya karena di db tipe datanya varchar
-                'max:3',
-                'min:3',
+                'max:5',
                 $uniqueRule
             ], 
             'deskripsi_tindakan_terapi'=>[

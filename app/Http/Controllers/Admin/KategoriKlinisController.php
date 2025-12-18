@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\KategoriKlinis;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KategoriKlinisController extends Controller
 {
@@ -27,6 +28,34 @@ class KategoriKlinisController extends Controller
 
         return redirect()->route('admin.kategori-klinis.index')
         ->with('berhasil tambah data kategori klinis mas');
+    }
+
+    public function edit($id)
+    {
+        $kategoriKlinis = DB::table('kategori_klinis')->where('idkategori_klinis', $id)->first();
+        return view('admin.kategori-klinis.edit', compact('kategoriKlinis'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validatedData = $this->validateKategoriKlinis($request, $id);
+
+        DB::table('kategori_klinis')->where('idkategori_klinis', $id)->update([
+            'nama_kategori_klinis' => $this->formatNama($validatedData['nama_kategori_klinis']),
+        ]);
+
+        return redirect()->route('admin.kategori-klinis.index')
+            ->with('success', 'Data kategori klinis berhasil diupdate!');
+    }
+
+    public function destroy($id)
+    {
+        try {
+            DB::table('kategori_klinis')->where('idkategori_klinis', $id)->delete();
+            return redirect()->route('admin.kategori-klinis.index')->with('success', 'Data dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.kategori-klinis.index')->with('error', 'Gagal hapus, data sedang dipakai.');
+        }
     }
 
     protected function validateKategoriKlinis(Request $request, $id=null)

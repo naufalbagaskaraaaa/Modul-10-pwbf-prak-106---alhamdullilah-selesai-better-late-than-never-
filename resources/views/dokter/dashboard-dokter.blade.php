@@ -19,7 +19,7 @@
                     <div class="mt-4">
                         <div class="row">
                             <div class="col-md-12 mb-2">
-                                <a href="{{ route('dokter.rekam-medis.index') }}" class="btn btn-primary btn-block">
+                                <a href="{{ route('dokter.rekam-medis.rekam-medis') }}" class="btn btn-primary btn-block">
                                     <i class="fas fa-notes-medical"></i> Rekam Medis si dokter
                                 </a>
                             </div>

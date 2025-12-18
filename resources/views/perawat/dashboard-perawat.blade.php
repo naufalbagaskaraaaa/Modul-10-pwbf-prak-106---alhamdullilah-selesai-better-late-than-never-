@@ -19,10 +19,19 @@
                     <div class="mt-4">
                         <div class="row">
                             <div class="col-md-12 mb-2">
-                                <a href="{{ route('perawat.rekam-medis.index') }}" class="btn btn-primary btn-block">
-                                    <i class="fas fa-notes-medical"></i> Rekam Medis si perawat
-                                </a>
-                            </div>
+                                @foreach($antrian as $item)
+                                    <div class="card mb-2 p-3">
+                                        <p>Pasien: {{ $item->nama_hewan }} ({{ $item->nama_pemilik }})</p>
+                                        <a href="{{ route('perawat.periksa', $item->idrekam_medis) }}" class="btn btn-primary">
+                                            Rekam Medis
+                                         </a>
+                                    </div>
+                                    @endforeach
+            
+                                @if($antrian->isEmpty())
+                                <p>Tidak ada antrean pending saat ini.</p>
+                                @endif
+                           </div>
                         </div>
                     </div>
 

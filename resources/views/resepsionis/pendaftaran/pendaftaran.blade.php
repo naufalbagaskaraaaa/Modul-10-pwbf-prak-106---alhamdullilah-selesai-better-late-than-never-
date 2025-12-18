@@ -27,8 +27,8 @@
                             @forelse ($data_pendaftaran as $pendaftaran)
                             <tr>
                                 <td>{{ $pendaftaran->idrekam_medis }}</td>
-                                <td>{{ $pendaftaran->pet->nama }}</td>
-                                <td>{{ $pendaftaran->created_at->format('d-m-Y H:i') }}</td>
+                                <td>{{ $pendaftaran->nama_hewan_peliharaan }}</td>
+                                <td>{{ \Carbon\Carbon::parse($pendaftaran->created_at)->format('d-m-Y H:i') }}</td>
                                 <td>{{ $pendaftaran->anamnesa }}</td>
                                 <td>{{ $pendaftaran->diagnosa }}</td>
                             </tr>

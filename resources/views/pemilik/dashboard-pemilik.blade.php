@@ -19,7 +19,7 @@
                     <div class="mt-4">
                         <div class="row">
                             <div class="col-md-12 mb-2">
-                                <a href="{{ route('pemilik.data-pet.index') }}" class="btn btn-primary btn-block">
+                                <a href="{{ route('pemilik.data-pet.data-pet') }}" class="btn btn-primary btn-block">
                                     <i class="fas fa-dog"></i> Data Pet
                                 </a>
                             </div>

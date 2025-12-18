@@ -30,8 +30,7 @@
                             id="nama_jenis_hewan"
                             name="nama_jenis_hewan"
                             value="{{old('nama_jenis_hewan')}}"
-                            placeholder="masukan nama jenis hewan"
-                            required>
+                            placeholder="masukan nama jenis hewan">
                             @error('nama_jenis_hewan')
                             <div class="invalid-feedback">
                                 {{$message}}

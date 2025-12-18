@@ -1,3 +1,4 @@
+@extends('layouts.app')
 <div class="mb-3">
     <form action="{{route('admin.pemilik.create')}}" method="GET" style="display: inline;">
         <button type="submit" class="btn btn-primary">
@@ -20,7 +21,7 @@
         @foreach ($pemilik as $index => $item)
         <tr>
             <td>{{$index+1}}</td>
-            <td>{{$item->user->nama}}</td>
+            <td>{{$item->nama}}</td>
             <td>{{$item->no_wa}}</td>
             <td>{{$item->alamat}}</td>
             <td>
